@@ -15,7 +15,7 @@ class PostController extends Controller
         $post = new Post;
         $posts = $post->all();
 
-        return view('components.posts.show-all-posts', compact('posts'));
+        return view('posts.list-posts', compact('posts'));
     }
 
     /**
@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('components.posts.create-post');
+        return view('posts.create-post');
     }
 
     /**
@@ -42,7 +42,7 @@ class PostController extends Controller
         $post->conteudo = $validated['conteudo'];
         $post->save();
 
-        return $this->index();
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -74,7 +74,7 @@ class PostController extends Controller
         $post->conteudo = $validated['conteudo'];
         $post->update();
 
-        return $this->index();
+        return redirect()->route('posts.index');
     }
 
     /**
