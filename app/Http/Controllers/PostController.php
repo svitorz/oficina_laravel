@@ -58,7 +58,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit-post', compact('post'));
     }
 
     /**
@@ -66,7 +66,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validated = $request->validate([
+            'titulo' => 'required|string|min:3|max:128',
+            'conteudo' => 'required|string|min:10|max:1024',
+        ]);
+        $post->titulo = $validated['titulo'];
+        $post->conteudo = $validated['conteudo'];
+        $post->update();
+
+        return $this->index();
     }
 
     /**
@@ -74,6 +82,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('posts.index');
     }
 }
